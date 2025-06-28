@@ -1,7 +1,7 @@
 
 A fork from JohnWStockwell Seismic Unix repository (https://github.com/JohnWStockwellJr/SeisUnix)
-The initial Github version is release 44R2 of the CWP/SU:Seismic Un*x package
-We are now at RELEASE 4426
+As many changes have been made the link with the original forked repository has been removed
+The actual fork (without changes) in in the repository SeisUnix.
 
 This fork is managed by Bruno Vermeulen (bruno.vermeulen@hotmail.com)
 
