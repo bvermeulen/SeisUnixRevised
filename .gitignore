@@ -1,6 +1,4 @@
 .vscode
-etc
-lib
 bin/*
 prop
 INSTALL

@@ -494,8 +494,8 @@ main (int argc,char **argv)
 	win = xNewWindow(dpy,xbox,ybox,wbox,hbox,(int) black,(int) white,windowtitle);
 
 	/* exit event protocol */
-	Atom wmExitWindow = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
-	XSetWMProtocols(dpy, win, &wmExitWindow, 1);
+	Atom wm_delete_window = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(dpy, win, &wm_delete_window, 1);
 
 	/* backwards compatibility */
 	if (STREQ(cmap,"gray")) {
@@ -1239,7 +1239,7 @@ main (int argc,char **argv)
 
 		/* exit */
 		} else if (event.type==ClientMessage &&
-				event.xclient.data.l[0] == wmExitWindow) {
+				event.xclient.data.l[0] == wm_delete_window) {
 			break;
 		}
 

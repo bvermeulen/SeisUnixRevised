@@ -8,6 +8,7 @@
 
 
 /* INCLUDES */
+#include <stdlib.h>
 #include "par.h"      /* required for portability, do not remove */
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
