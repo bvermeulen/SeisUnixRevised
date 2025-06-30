@@ -4,7 +4,6 @@
 #include <X11/StringDefs.h>
 #include <X11/Xaw/Command.h>
 #include <X11/Xaw/Box.h>
-#include <X11/Xmu/Editres.h>
 
 /*
 Compile instructions:
@@ -49,10 +48,11 @@ int main(int argc, char *argv[])
 
 void XQuit(Widget w, XEvent *ev, String *vector, Cardinal *count)
 {
-    printf("close event by X ...\n");
     if (ev->type == ClientMessage &&
-        ((Atom)ev->xclient.data.l[0]) == wm_delete_window)
+        ((Atom)ev->xclient.data.l[0]) == wm_delete_window) {
+        printf("close event by X ...\n");
         exit(0);
+    }
 }
 
 void ButtonQuit(Widget w, XtPointer client_data, XtPointer call_data)
