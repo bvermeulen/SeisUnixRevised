@@ -1,0 +1,8 @@
+/* : : generated from features/stdio_lcl by iffe version 2005-02-11 : : */
+#ifndef _def_stdio_sfio
+#define _def_stdio_sfio	1
+#define _sys_types	1	/* #include <sys/types.h> ok */
+#include <../include/stdio.h>	/* the native <stdio.h> */
+#undef	_lcl_stdio
+#define _lcl_stdio	1
+#endif

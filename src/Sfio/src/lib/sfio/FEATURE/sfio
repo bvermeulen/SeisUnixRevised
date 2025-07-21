@@ -1,0 +1,84 @@
+/* : : generated from features/sfio by iffe version 2005-02-11 : : */
+#ifndef _def_sfio_sfio
+#define _def_sfio_sfio	1
+#define _sys_types	1	/* #include <sys/types.h> ok */
+#define _hdr_zlib	1	/* #include <zlib.h> ok */
+#define _key_signed	1	/* signed is a reserved keyword */
+#define _hdr_time	1	/* #include <time.h> ok */
+#define _sys_time	1	/* #include <sys/time.h> ok */
+#define _hdr_stdarg	1	/* #include <stdarg.h> ok */
+#define _hdr_stdlib	1	/* #include <stdlib.h> ok */
+#define _sys_stat	1	/* #include <sys/stat.h> ok */
+#define _hdr_wchar	1	/* #include <wchar.h> ok */
+#define _sys_times	1	/* #include <sys/times.h> ok */
+#define _hdr_stddef	1	/* #include <stddef.h> ok */
+#define _typ_mbstate_t	1	/* mbstate_t is a type */
+#define _lib_mbrtowc	1	/* mbrtowc() in default lib(s) */
+#define _lib_wcrtomb	1	/* wcrtomb() in default lib(s) */
+#define _lib_mbtowc	1	/* mbtowc() in default lib(s) */
+#define _lib_wctomb	1	/* wctomb() in default lib(s) */
+#define _hdr_string	1	/* #include <string.h> ok */
+#define _hdr_math	1	/* #include <math.h> ok */
+#define _hdr_unistd	1	/* #include <unistd.h> ok */
+#define _hdr_values	1	/* #include <values.h> ok */
+#define _hdr_float	1	/* #include <float.h> ok */
+#define _lib_atexit	1	/* atexit() in default lib(s) */
+#define _lib_isnan	1	/* isnan() in default lib(s) */
+#define _lib_remove	1	/* remove() in default lib(s) */
+#define _lib_unlink	1	/* unlink() in default lib(s) */
+#define _lib_access	1	/* access() in default lib(s) */
+#define _lib_lseek	1	/* lseek() in default lib(s) */
+#define _lib_lseek64	1	/* lseek64() in default lib(s) */
+#define _lib_read	1	/* read() in default lib(s) */
+#define _lib_write	1	/* write() in default lib(s) */
+#define _lib_dup	1	/* dup() in default lib(s) */
+#define _lib_pipe	1	/* pipe() in default lib(s) */
+#define _lib_fcntl	1	/* fcntl() in default lib(s) */
+#define _lib_ftruncate	1	/* ftruncate() in default lib(s) */
+#define _lib_ftruncate64	1	/* ftruncate64() in default lib(s) */
+#define _lib_open	1	/* open() in default lib(s) */
+#define _lib_open64	1	/* open64() in default lib(s) */
+#define _lib_close	1	/* close() in default lib(s) */
+#define _lib_creat	1	/* creat() in default lib(s) */
+#define _lib_creat64	1	/* creat64() in default lib(s) */
+#define _lib_stat	1	/* stat() in default lib(s) */
+#define _lib_stat64	1	/* stat64() in default lib(s) */
+#define _lib_fstat	1	/* fstat() in default lib(s) */
+#define _lib_fstat64	1	/* fstat64() in default lib(s) */
+#define _lib_mmap	1	/* mmap() in default lib(s) */
+#define _lib_mmap64	1	/* mmap64() in default lib(s) */
+#define _lib_munmap	1	/* munmap() in default lib(s) */
+#define _lib_isatty	1	/* isatty() in default lib(s) */
+#define _typ_off_t	1	/* off_t is a type */
+#define _typ_struct_stat	1	/* compile{\ passed */
+#define _typ___FILE	1	/* compile{\ passed */
+#define _sys_socket	1	/* #include <sys/socket.h> ok */
+#define _lib_socketpair	1	/* socketpair() in default lib(s) */
+#define _lib_bcopy	1	/* bcopy() in default lib(s) */
+#define _lib_bzero	1	/* bzero() in default lib(s) */
+#define _lib_memcpy	1	/* memcpy() in default lib(s) */
+#define _lib_memset	1	/* memset() in default lib(s) */
+#define _lib_memalign	1	/* memalign() in default lib(s) */
+#define _sys_stat	1	/* stat() in default lib(s) */
+#define _sys_mman	1	/* #include <sys/mman.h> ok */
+#define _lib_vfork	1	/* vfork() in default lib(s) */
+#define _lib_fork	1	/* fork() in default lib(s) */
+#define _lib_execv	1	/* execv() in default lib(s) */
+#define _lib_execl	1	/* execl() in default lib(s) */
+#define _sys_ioctl	1	/* #include <sys/ioctl.h> ok */
+#define _lib_waitpid	1	/* waitpid() in default lib(s) */
+#define _lib_getpagesize	1	/* getpagesize() in default lib(s) */
+#define _more_void_int	1	/* voidptr is larger than int */
+#define _more_long_int	1	/* long is larger than int */
+#define _stat_blksize	1	/* st_blksize is a field in struct stat */
+#define _proto_open	1	/* open() has a vararg prototype */
+#define _proto_bcopy	1	/* bcopy() has prototype */
+#define _proto_bzero	1	/* bzero() has prototype */
+#define _proto_time	1	/* time() has prototype */
+#define _proto__exit	1	/* _exit() has prototype */
+#define _lib_poll_fd_1	1	/* fd is first arg to poll() */
+#define _lib_select	1	/* select() has standard 5 arg interface */
+#define _socket_peek	1	/* recv(MSG_PEEK) works */
+#define _lib_strtod	1	/* strtod() in default lib(s) */
+#define _lib_locale	1	/* Check for localeconv */
+#endif

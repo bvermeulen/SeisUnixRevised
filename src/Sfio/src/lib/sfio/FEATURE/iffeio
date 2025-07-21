@@ -1,0 +1,8 @@
+/* : : generated from features/iffeio by iffe version 2005-02-11 : : */
+#ifndef _SFSTDIO_H
+#define _SFSTDIO_H	1
+#define _sys_types	1	/* #include <sys/types.h> ok */
+#include "FEATURE/common"
+#include "FEATURE/stdio.lcl"
+
+#endif

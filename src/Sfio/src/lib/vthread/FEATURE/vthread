@@ -1,0 +1,16 @@
+/* : : generated from features/vthread by iffe version 2005-02-11 : : */
+#ifndef _def_vthread_vthread
+#define _def_vthread_vthread	1
+#define _sys_types	1	/* #include <sys/types.h> ok */
+#define _hdr_pthread	1	/* #include <pthread.h> ok */
+#define _LIB_pthread	1	/* -lpthread is a library */
+#define _lib_pthread_mutexattr_settype	1	/* pthread_mutexattr_settype() in default lib(s) */
+#define _num_PTHREAD_MUTEX_RECURSIVE	1	/* PTHREAD_MUTEX_RECURSIVE is a numeric constant */
+#define _num_PTHREAD_MUTEX_RECURSIVE_NP	1	/* PTHREAD_MUTEX_RECURSIVE_NP is a numeric constant */
+#define _num_PTHREAD_MUTEX_ERRORCHECK	1	/* PTHREAD_MUTEX_ERRORCHECK is a numeric constant */
+#define _num_PTHREAD_MUTEX_ERRORCHECK_NP	1	/* PTHREAD_MUTEX_ERRORCHECK_NP is a numeric constant */
+#define _lib_pthread_mutexattr_init	1	/* pthread_mutexattr_init() in default lib(s) */
+#define _lib_pthread_mutexattr_destroy	1	/* pthread_mutexattr_destroy() in default lib(s) */
+#define _lib_pthread_attr_init	1	/* pthread_attr_init() in default lib(s) */
+#define _lib_pthread_attr_destroy	1	/* pthread_attr_destroy() in default lib(s) */
+#endif

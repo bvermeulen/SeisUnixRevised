@@ -1,0 +1,64 @@
+/* : : generated from features/stdio by iffe version 2005-02-11 : : */
+#ifndef _def_stdio_sfio
+#define _def_stdio_sfio	1
+#define _sys_types	1	/* #include <sys/types.h> ok */
+#define _siz_fpos_t	16
+#define _siz_off_t	8
+#define _FILE_flags	1	/* field FILE._flags exists */
+#if _FILE__cnt && ! _FILE_cnt
+#define _FILE_cnt	1
+#define _cnt		__cnt
+#endif
+#if _FILE__ptr && ! _FILE_ptr
+#define _FILE_ptr	1
+#define _ptr		__ptr
+#endif
+#if _FILE__flag && ! _FILE_flag
+#define _FILE_flag	1
+#define _flag		__flag
+#endif
+#if _FILE__file && ! _FILE_file
+#define _FILE_file	1
+#define _file		__file
+#endif
+
+#define _FILE_readptr	1	/* fields FILE._IO_read_ptr/end exist */
+#define _FILE_writeptr	1	/* fields FILE._IO_write_ptr/end exist */
+#define _FILE_flags	1	/* field FILE._flags exists */
+#define _FILE_fileno	1	/* field FILE._fileno exists */
+#define _u_flow	1	/* uflow() does bump buffer */
+#define _under_flow	1	/* underflow() does not bump buffer */
+#define _lib___uflow	1	/* __uflow() in default lib(s) */
+#define _lib___underflow	1	/* __underflow() in default lib(s) */
+#define _lib___overflow	1	/* __overflow() in default lib(s) */
+#define _lib__IO_getc	1	/* _IO_getc() in default lib(s) */
+#define _lib__IO_putc	1	/* _IO_putc() in default lib(s) */
+#define _lib_clearerr_unlocked	1	/* clearerr_unlocked() in default lib(s) */
+#define _lib_feof_unlocked	1	/* feof_unlocked() in default lib(s) */
+#define _lib_ferror_unlocked	1	/* ferror_unlocked() in default lib(s) */
+#define _lib_fflush_unlocked	1	/* fflush_unlocked() in default lib(s) */
+#define _lib_fgetc_unlocked	1	/* fgetc_unlocked() in default lib(s) */
+#define _lib_fgets_unlocked	1	/* fgets_unlocked() in default lib(s) */
+#define _lib_fileno_unlocked	1	/* fileno_unlocked() in default lib(s) */
+#define _lib_fputc_unlocked	1	/* fputc_unlocked() in default lib(s) */
+#define _lib_fputs_unlocked	1	/* fputs_unlocked() in default lib(s) */
+#define _lib_fread_unlocked	1	/* fread_unlocked() in default lib(s) */
+#define _lib_fwrite_unlocked	1	/* fwrite_unlocked() in default lib(s) */
+#define _lib_getc_unlocked	1	/* getc_unlocked() in default lib(s) */
+#define _lib_getchar_unlocked	1	/* getchar_unlocked() in default lib(s) */
+#define _lib_putc_unlocked	1	/* putc_unlocked() in default lib(s) */
+#define _lib_putchar_unlocked	1	/* putchar_unlocked() in default lib(s) */
+#define _lib___vsnprintf	1	/* __vsnprintf() in default lib(s) */
+#define _lib_fseeko	1	/* fseeko() in default lib(s) */
+#define _lib_ftello	1	/* ftello() in default lib(s) */
+#define _lib_tmpfile64	1	/* tmpfile64() in default lib(s) */
+#define _lib_fopen64	1	/* fopen64() in default lib(s) */
+#define _lib_freopen64	1	/* freopen64() in default lib(s) */
+#define _lib_fgetpos64	1	/* fgetpos64() in default lib(s) */
+#define _lib_fsetpos64	1	/* fsetpos64() in default lib(s) */
+#define _lib_ftello64	1	/* ftello64() in default lib(s) */
+#define _lib___ftello64	1	/* __ftello64() in default lib(s) */
+#define _lib_fseeko64	1	/* fseeko64() in default lib(s) */
+#define _lib___fseeko64	1	/* __fseeko64() in default lib(s) */
+#define _hdr_stdio	1	/* #include <stdio.h> ok */
+#endif
