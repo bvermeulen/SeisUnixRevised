@@ -209,12 +209,12 @@ main (int argc, char **argv)
 
 	/* added by Gerald Klein */
 	char *plotfile;         /* filename of plotfile GK */
-	int lock=0;		/* lock/unlock zoom while scrolling */
-	float mve;		/* distance for scrolling */
-	float mvefac=8.;	/* window factor for scrolldistance 
-	                         * 2=half window size; 
-				 * 8=one eighths of the window size */
-	char  *msg="";		/* message on screen */
+	int lock=0;				/* lock/unlock zoom while scrolling */
+	float mve;				/* distance for scrolling */
+	float mvefac=8.;		/* window factor for scrolldistance 
+	                        	* 2=half window size; 
+				 			 	* 8=one eighths of the window size */
+	char  *msg="";			/* message on screen */
 
 	/* initialize getpar */
 	initargs(argc,argv);
@@ -409,7 +409,11 @@ main (int argc, char **argv)
 
 	/* create window */
 	win = xNewWindow(dpy,xbox,ybox,wbox,hbox,(int) black,(int) white,windowtitle);
-		
+
+	/* exit event protocol */
+	Atom wm_delete_window = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(dpy, win, &wm_delete_window, 1);
+
 	/* make GC for image */
 	gci = XCreateGC(dpy,win,0,NULL);
 
@@ -711,6 +715,7 @@ main (int argc, char **argv)
 			} else if (keysym==XK_q || keysym==XK_Q) {
 			/* This is the exit from the event loop */
 				break;
+				
 			} else if (keysym==XK_p || keysym==XK_P) {
 			/* invoke pswigb with appropriate data */
 				char cmdtemp[256];
@@ -860,8 +865,11 @@ main (int argc, char **argv)
 		} else if (event.type==ButtonRelease &&
 			   event.xbutton.button==Button2) {
 			showloc = 0;
+		} else if (event.type == ClientMessage &&
+			 event.xclient.data.l[0] == wm_delete_window)
+		{
+			break;
 		}
-
 	} /* end of event loop */
 
 	/* close connection to X server */
