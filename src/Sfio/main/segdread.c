@@ -705,6 +705,8 @@ int main(int argc, char **argv)
 					scan_type = 0;
 				nsamp_the = 0;
 				nsamp_cs = 0;
+				// BRUNO scan_type=0; 
+				// chan_set=1;
 				if (csd[scan_type][chan_set].te != 0 && hdr1_i != 0)
 					nsamp_cs = 2 * (csd[scan_type][chan_set].te - csd[scan_type][chan_set].tf) * (16 << bcd(&csd[scan_type][chan_set].sc_j, 0, 1)) / hdr1_i + 1;
 				else

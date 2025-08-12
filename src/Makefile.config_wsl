@@ -111,7 +111,8 @@ CPP = cpp
 CC = gcc
 OPTC = -g  -std=c99 -Wall -pedantic -Wno-long-long 
 #OPTC = -O  -std=c99 -Wall -pedantic -Wno-long-long 
-CFLAGS = -I$I $(OPTC) $(CWP_FLAGS) -D_BSD_SOURCE -D_POSIX_SOURCE
+#CFLAGS = -I$I $(OPTC) $(CWP_FLAGS) -D_BSD_SOURCE -D_POSIX_SOURCE
+CFLAGS = -I$I $(OPTC) $(CWP_FLAGS) -D_DEFAULT_SOURCE -D_POSIX_SOURCE
 
 FC = gfortran
 FOPTS = -g -std=legacy 
