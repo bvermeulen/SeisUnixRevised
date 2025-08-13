@@ -444,7 +444,7 @@ int main(int argc, char **argv)
 		n_ec = bcd((unsigned char *)&segd_general_header_1.ec, 0, 2);
 		n_ex = bcd((unsigned char *)&segd_general_header_1.ex, 0, 2);
 
-		if (verbose == 2)
+		if (verbose == 1)
 			info_gh1(&segd_general_header_1);
 
 		/* Additional general headers */
@@ -467,7 +467,7 @@ int main(int argc, char **argv)
 			if (EXIT_FAILURE == get_gn_sn358(&segd_gen_head_sn358, tapeun))
 				break;
 
-			if (verbose == 2)
+			if (verbose == 1)
 				info_gn_sn358(&segd_gen_head_sn358);
 			if (hdr1_i != 0)
 			{
@@ -491,8 +491,8 @@ int main(int argc, char **argv)
 
 					if (EXIT_FAILURE == get_gh2(&segd_general_header_2, tapeun))
 						break;
-					if ((segd_general_header_2.rev[0] <= 1) && (segd_general_header_2.rev[0] != 0))
-					{ /* looks like SEGD rev 1 */
+					if ((segd_general_header_2.rev[0] <= 2) && (segd_general_header_2.rev[0] != 0))
+					{ /* looks like SEGD rev 1 or rev 2 */
 						if (tr.fldr == BCD_FFFF)
 							tr.fldr = 65536 * segd_general_header_2.ef[0] +
 									  256 * segd_general_header_2.ef[1] + segd_general_header_2.ef[2];
@@ -503,7 +503,7 @@ int main(int argc, char **argv)
 						if (n_ex == BCD_FF)
 							n_ex = 256 * segd_general_header_2.eh[0] + segd_general_header_2.eh[1];
 						n_gt = segd_general_header_2.gt;
-						if (verbose == 2)
+						if (verbose == 1)
 							info_gh2(&segd_general_header_2);
 						if (hdr1_r == BCD_FFF && hdr1_i != 0)
 							nsamp_hdr2 = segd_general_header_2.erl[2] +
@@ -521,7 +521,7 @@ int main(int argc, char **argv)
 					}
 					else
 					{
-						if (verbose == 2)
+						if (verbose == 1)
 							info_gh2(&segd_general_header_2);
 					}
 				}
@@ -532,7 +532,7 @@ int main(int argc, char **argv)
 
 					if (EXIT_FAILURE == get_ghn(&segd_general_header_n, tapeun))
 						break;
-					if (verbose == 2)
+					if (verbose == 1)
 						info_ghn(&segd_general_header_n);
 					if (i == 1)
 						tr.ep = 65536 * segd_general_header_n.spn[0] + 256 * segd_general_header_n.spn[1] + segd_general_header_n.spn[2];
@@ -584,7 +584,7 @@ int main(int argc, char **argv)
 					if (verbose && segd_channel_set_header->c == 0x10)
 						warn("Multiplier value for channel set %d of scan type %d is : %7.3e", i_cs, i_scan, mmp[i_scan][i_cs]);
 				}
-				if (verbose == 2)
+				if (verbose == 1)
 					info_csh(segd_channel_set_header);
 			}
 
@@ -593,7 +593,7 @@ int main(int argc, char **argv)
 			{
 				if (EXIT_FAILURE == get_ssh(&segd_sample_skew, tapeun))
 					break;
-				if (verbose == 2)
+				if (verbose == 1)
 					info_ssh(&segd_sample_skew);
 			}
 		}
@@ -605,7 +605,7 @@ int main(int argc, char **argv)
 				break;
 			/* Local decoding */
 			/* (void) sscanf(&segd_extended_header[11], "%2hd:%2hd:%2hd", &tr.hour, &tr.minute, &tr.sec); */
-			if (verbose == 2)
+			if (verbose == 1)
 				info_ech(&segd_extended_header);
 		}
 
@@ -697,35 +697,33 @@ int main(int argc, char **argv)
 					info_dth(&segd_dem_trace_header);
 				scan_type = bcd((unsigned char *)&segd_dem_trace_header.st, 0, 2) - 1;
 				chan_set = bcd((unsigned char *)&segd_dem_trace_header.cn, 0, 2) - 1;
-				warn("scan_type=%d", scan_type);
-				warn("chan_set=%d", scan_type);
+				if (verbose == 2)
+					warn("scan_type=%d, chan_set=%d", scan_type, chan_set);
 				if (scan_type < 0)
 					scan_type = 0;
 				if (chan_set < 0)
 					scan_type = 0;
 				nsamp_the = 0;
 				nsamp_cs = 0;
-				// BRUNO scan_type=0; 
-				// chan_set=1;
 				if (csd[scan_type][chan_set].te != 0 && hdr1_i != 0)
 					nsamp_cs = 2 * (csd[scan_type][chan_set].te - csd[scan_type][chan_set].tf) * (16 << bcd(&csd[scan_type][chan_set].sc_j, 0, 1)) / hdr1_i + 1;
 				else
 					nsamp_cs = ((ns - 1) << bcd(&csd[scan_type][chan_set].sc_j, 0, 1)) + 1;
 				if (nsamp_cs != 0 && ns_override == 0)
 					ns = nsamp_cs;
-				if (verbose)
+				if (verbose == 2)
 					warn("nsamp_cs=%d\n", nsamp_cs);
 
 				for (i = 0; i < segd_dem_trace_header.the; i++)
 				{ /* read the trace header extension blocks */
 					if (EXIT_FAILURE == get_the(&segd_trace_header_ext, tapeun))
 						break;
-					if (verbose == 2)
+					if (verbose == 3)
 						warn("segd_dem_trace_header.the = %d", segd_dem_trace_header.the);
 					if (i == 0)
 					{
 						nsamp_the = segd_trace_header_ext.nbs[2] + 256 * (segd_trace_header_ext.nbs[1] + 256 * (segd_trace_header_ext.nbs[0]));
-						if (verbose)
+						if (verbose == 2)
 							warn("nsamp_the=%d\n", nsamp_the);
 					}
 					if (nsamp_the != 0 && nsamp_cs != 0 && nsamp_cs != nsamp_the)
@@ -927,7 +925,7 @@ int main(int argc, char **argv)
 		{
 			if (EXIT_FAILURE == get_gt(&segd_general_trailer, tapeun))
 				break;
-			if (verbose == 2)
+			if (verbose == 1)
 				info_gt(&segd_general_trailer);
 		}
 
