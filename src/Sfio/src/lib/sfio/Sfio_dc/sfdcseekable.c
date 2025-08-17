@@ -56,7 +56,7 @@ Sfdisc_t*	disc;	/* discipline */
 		buf = (char*)buf + r;
 		n -= r;
 	}
-		
+
 	/* do a raw read */
 	if((w = sfrd(f,buf,n,disc)) <= 0)
 	{	sk->eof = 1;
@@ -126,7 +126,7 @@ Sfdisc_t*	disc;
 
 /* on close, remove the discipline */
 #if __STD_C
-static skexcept(Sfio_t* f, int type, Void_t* data, Sfdisc_t* disc)
+static int skexcept(Sfio_t* f, int type, Void_t* data, Sfdisc_t* disc)
 #else
 static skexcept(f,type,data,disc)
 Sfio_t*		f;

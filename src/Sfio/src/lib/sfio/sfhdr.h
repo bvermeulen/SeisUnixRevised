@@ -38,7 +38,7 @@
 #undef	_LARGEFILE_SOURCE
 #undef	_FILE_OFFSET_BITS
 #define _LARGEFILE64_SOURCE	1	/* enabling the *64 stuff */
-#define _LARGEFILE_SOURCE	1	
+#define _LARGEFILE_SOURCE	1
 #endif
 
 #if _hdr_stdarg
@@ -48,7 +48,7 @@
 #endif
 #include	"FEATURE/common"
 #if !__STD_C
-#define const	
+#define const
 #endif
 #endif /* !_PACKAGE_ast */
 
@@ -261,7 +261,7 @@
 #define sysftruncatef	ftruncate
 #endif
 #if _lib_remove
-#define sysremovef	remove
+#define sysremovef	unlink
 #else
 #define sysremovef	unlink
 #endif
@@ -980,7 +980,7 @@ typedef struct _sftab_
 {	Sfdouble_t	sf_pos10[SF_MAXEXP10];	/* positive powers of 10	*/
 	Sfdouble_t	sf_neg10[SF_MAXEXP10];	/* negative powers of 10	*/
 	uchar		sf_dec[200];		/* ascii reps of values < 100	*/
-	char*		sf_digits;		/* digits for general bases	*/ 
+	char*		sf_digits;		/* digits for general bases	*/
 	int		(*sf_cvinitf)();	/* initialization function	*/
 	int		sf_cvinit;		/* initialization state		*/
 	Fmtpos_t*	(*sf_fmtposf)_ARG_((Sfio_t*,const char*,va_list,Sffmt_t*,int));

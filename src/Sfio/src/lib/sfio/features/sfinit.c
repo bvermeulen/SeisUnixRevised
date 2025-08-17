@@ -6,7 +6,7 @@
 #include "FEATURE/common"
 #include "FEATURE/float"
 
-main()
+int main()
 {
 	register int	i;
 #if _ast_fltmax_double

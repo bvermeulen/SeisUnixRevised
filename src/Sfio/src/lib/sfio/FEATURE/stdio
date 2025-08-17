@@ -2,9 +2,6 @@
 #ifndef _def_stdio_sfio
 #define _def_stdio_sfio	1
 #define _sys_types	1	/* #include <sys/types.h> ok */
-#define _siz_fpos_t	16
-#define _siz_off_t	8
-#define _FILE_flags	1	/* field FILE._flags exists */
 #if _FILE__cnt && ! _FILE_cnt
 #define _FILE_cnt	1
 #define _cnt		__cnt
@@ -22,12 +19,6 @@
 #define _file		__file
 #endif
 
-#define _FILE_readptr	1	/* fields FILE._IO_read_ptr/end exist */
-#define _FILE_writeptr	1	/* fields FILE._IO_write_ptr/end exist */
-#define _FILE_flags	1	/* field FILE._flags exists */
-#define _FILE_fileno	1	/* field FILE._fileno exists */
-#define _u_flow	1	/* uflow() does bump buffer */
-#define _under_flow	1	/* underflow() does not bump buffer */
 #define _lib___uflow	1	/* __uflow() in default lib(s) */
 #define _lib___underflow	1	/* __underflow() in default lib(s) */
 #define _lib___overflow	1	/* __overflow() in default lib(s) */

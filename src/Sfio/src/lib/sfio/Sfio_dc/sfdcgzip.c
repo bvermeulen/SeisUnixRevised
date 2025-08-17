@@ -22,12 +22,12 @@ int		flags;
 #include <zlib.h>
 #include <sfdisc.h>
 
-typedef	 gzFile		Gz_t;
+typedef	 gzFile	Gz_t;
 
 typedef struct
 {
-	Sfdisc_t	disc;		/* sfio discipline		*/
-	Gz_t*		gz;		/* gz handle			*/
+	Sfdisc_t	disc;	/* sfio discipline		*/
+	Gz_t		gz;		/* gz handle			*/
 } Sfgzip_t;
 
 #ifndef newof
@@ -144,10 +144,10 @@ int		flags;
 		/*
 		 * peek the first 2 bytes to verify the magic
 		 *
-		 *	0x1f8b	sfdcgzip	gzip	
+		 *	0x1f8b	sfdcgzip	gzip
 		 *	0x1f9d	sfdclzw		compress
 		 */
-		
+
 		if (!(s = (unsigned char*)sfreserve(sp, 2, 1)))
 			return -1;
 		n = (s[0] != 0x1f || s[1] != 0x8b) ? -1 : 0;

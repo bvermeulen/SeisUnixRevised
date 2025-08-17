@@ -48,7 +48,7 @@ int		type;
 	if(sfseek(su->parent,here,0) != here)
 		io = 0;
 	else
-	{	if(type == SF_WRITE) 
+	{	if(type == SF_WRITE)
 			io = sfwrite(su->parent,buf,n);
 		else	io = sfread(su->parent,buf,n);
 		if(io > 0)
@@ -133,7 +133,7 @@ Sfdisc_t*	disc;
 }
 
 #if __STD_C
-static streamexcept(Sfio_t* f, int type, Void_t* data, Sfdisc_t* disc)
+static int streamexcept(Sfio_t* f, int type, Void_t* data, Sfdisc_t* disc)
 #else
 static streamexcept(f, type, data, disc)
 Sfio_t*		f;
