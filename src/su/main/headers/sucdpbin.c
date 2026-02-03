@@ -44,20 +44,18 @@ main(int argc, char **argv)
 {
 	double *xline = NULL; /* array of binline vertices in x	*/
 	double *yline = NULL; /* ...    binline vertices in x 	*/
+	double *segment_lengths = NULL;
 	double dcdp;	/* distance between bin centers */
 	double *xbin = NULL, *ybin = NULL;
 	int *cbin = NULL;
-	double *dbin = NULL; /* remove if not required */
-	double sl, ord, x2, a, b, c, d, delta, dx;
 	double xmp, ymp, dist, distmin;
 	double distmax;
-	int nxline, nyline, nbin, totalbincount;
+	int nxline, nyline, nbin, total_trace_count;
 	int verbose;
 	int ipoint;
-	int cdpmin;
+	int cdp_min;
 	double scale;
-	double length;
-	int maxbin, ibin,iseg ;
+	int max_bin, ibin;
 
 	/* Initialize */
 	initargs(argc, argv);
@@ -76,19 +74,15 @@ main(int argc, char **argv)
 	/* allocate space */
 	xline = ealloc1double(nxline);
 	yline = ealloc1double(nyline);
+	segment_lengths = ealloc1double(nxline);
 	getpardouble("xline", xline);
 	getpardouble("yline", yline);
-	for (ipoint = 1; ipoint < nxline; ++ipoint) {
-		if (xline[ipoint] <= xline[ipoint - 1]) {
-			err("xline values must increase monotonically");
-		}
-	}
 
 	if (!getpardouble("dcdp", &dcdp)) {
 		err("must give dcdp");
 	}
-	if (!getparint("cdpmin", &cdpmin)) {
-		cdpmin = 1001;
+	if (!getparint("cdpmin", &cdp_min)) {
+		cdp_min = 1001;
 	}
 	if (!getpardouble("distmax", &distmax)) {
 		distmax = dcdp;
@@ -107,84 +101,51 @@ main(int argc, char **argv)
 		} while (ipoint < nxline);
 	}
 
-	/* maximum length of the line */
-	length=0;
-	for (ipoint=1; ipoint<nxline; ++ipoint) {
-		length=length+sqrt(pow((xline[ipoint]-xline[ipoint-1]),2)+pow((yline[ipoint]-yline[ipoint-1]),2));
+	/* Process by distance along the polyline, not by x-coordinate */
+	float total_length = 0;
+	for (int i = 0; i < nxline-1; i++) {
+    	float dx_seg = xline[i+1] - xline[i];
+    	float dy_seg = yline[i+1] - yline[i];
+    	segment_lengths[i] = sqrt(dx_seg*dx_seg + dy_seg*dy_seg);
+    	total_length += segment_lengths[i];
 	}
-	maxbin=length/dcdp+1;
-	xbin = ealloc1double(maxbin+1);
-	ybin = ealloc1double(maxbin+1);
-	cbin = ealloc1int(maxbin+1);
-	dbin = ealloc1double(maxbin+1);
 
-	ibin=0;
-	xbin[ibin] = xline[0];
-	ybin[ibin] = yline[0];
+	max_bin= total_length / dcdp + 1;
+	xbin = ealloc1double(max_bin+1);
+	ybin = ealloc1double(max_bin+1);
+	cbin = ealloc1int(max_bin+1);
+	ibin = 0;
+
 	if (verbose > 1)
 	{
 		warn("ibin=%d x=%f y=%f ", ibin, xbin[ibin], ybin[ibin]);
 	}
-
-	iseg = 0;
-	sl = (yline[1]-yline[0])/(xline[1]-xline[0]);
-	ord = (yline[0]*xline[1]-yline[1]*xline[0])/
-	 	  (xline[1]-xline[0]);
-
-	if (verbose > 1) {
-		warn("slope: %f, ord: %f", sl, ord);
+	
+	/* Sample at regular distance intervals along the entire curve */
+	int current_seg = 0;
+	float current_dist = 0.0;
+	float seg_start_dist = 0.0;
+	 
+	while (current_dist <= total_length) {
+	    /* Find which segment we're in */
+	    while (current_seg < nxline-1 && current_dist > seg_start_dist + segment_lengths[current_seg]) {
+	        seg_start_dist += segment_lengths[current_seg];
+	        current_seg++;
+	    }
+        /* Interpolate within the segment */
+	    float dist_fraction = (current_dist - seg_start_dist) / segment_lengths[current_seg];
+	    
+		xbin[ibin] = xline[current_seg] + dist_fraction * (xline[current_seg+1] - xline[current_seg]);
+	    ybin[ibin] = yline[current_seg] + dist_fraction * (yline[current_seg+1] - yline[current_seg]);
+       	ibin++;
+    	current_dist += dcdp;  /* Step by fixed distance */
 	}
-
-	dx = dcdp * sqrt(1/(1 + sl*sl));
-
-	/* loop over segments */
-	do {
-		if (verbose > 1) {
-			warn("iseg=%d",iseg);
-		}
-
-		/* 1 segment binning */
-		do {
-			++ibin;
-			xbin[ibin] = xbin[ibin-1] + dx;
-			ybin[ibin] = sl*xbin[ibin] + ord;
-
-			if (verbose > 1) {
-				warn("ibin=%d x=%f y=%f ",ibin, xbin[ibin], ybin[ibin]);
-			}
-
-		} while (xbin[ibin]<= xline[iseg+1]);
-
-		++iseg;
-
-		/* parameters of the next segment */
-		sl = (yline[iseg+1] - yline[iseg]) / (xline[iseg+1] - xline[iseg]);
-		dx = dcdp * sqrt(1 / (1 + sl*sl));
-		ord= (yline[iseg] * xline[iseg+1] - yline[iseg+1] * xline[iseg]) /
-		     (xline[iseg+1]-xline[iseg]);
-
-		a = (ord - ybin[ibin - 1]);
-		b = 1 + sl*sl;
-		c = -2*xbin[ibin - 1] + 2*sl*a;
-		d = xbin[ibin - 1]*xbin[ibin - 1] + a*a - dcdp*dcdp;
-		delta = c*c - 4*b*d;
-		x2 = 0.5 * (-c + sqrt(delta)) / b;
-
-		xbin[ibin - 1] = x2;
-		ybin[ibin - 1] = sl * xbin[ibin] + ord;
-
-		if (verbose > 1) {
-			warn("slope=%f dx=%f ord=%f delta=%f", sl, dx, ord, delta);
-			warn("ibin=%d x=%f y=%f", ibin, xbin[ibin], ybin[ibin]);
-		}
-
-	} while (xbin[ibin] <= xline[nxline-1]);
 	nbin=ibin;
 
 	if (verbose > 1) {
-		warn ("length of the line :%f ",length);
-		warn ("maximum number of bin:%d",maxbin);
-		warn ("actual number of bin:%d",nbin);
+		warn ("length of the line :%f ", total_length);
+		warn ("maximum number of bin:%d", max_bin);
+		warn ("actual number of bin:%d", nbin);
 	}
 
 	/* Get info from first trace */
@@ -193,31 +154,33 @@ main(int argc, char **argv)
 	/* Loop over traces */
 	do {
 		if (tr.scalco < 0 )
-		scale=1./abs(tr.scalco);
+			scale=1./abs(tr.scalco);
 		else if (tr.scalco > 0)
-		scale=tr.scalco;
+			scale=tr.scalco;
 		else {
 			warn ("scalco = 0 ; 1 assumed") ;
 			scale=1;
 		}
-		xmp=(tr.gx+tr.sx) * 0.5 * scale;
-		ymp=(tr.gy+tr.sy) * 0.5 *scale;
-		tr.cdp=cdpmin;
-		distmin=sqrt(pow(xmp-xbin[0],2)+pow(ymp-ybin[0],2));
+		xmp = (tr.gx + tr.sx) * 0.5 * scale;
+		ymp = (tr.gy + tr.sy) * 0.5 *scale;
+		distmin = 2 * distmax;
 
 		for (ibin=0 ; ibin < nbin ; ++ibin) {
-			dist=sqrt(pow(xmp-xbin[ibin],2)+pow(ymp-ybin[ibin],2));
+			dist = sqrt(
+				(xmp - xbin[ibin]) * (xmp - xbin[ibin]) + 
+				(ymp - ybin[ibin]) * (ymp - ybin[ibin])
+			);
 			if (dist < distmin) {
-				distmin=dist;
-				tr.cdp=ibin+cdpmin;
+				distmin = dist;
+				tr.cdp = ibin + cdp_min;
 			}
 		}
 
 		if (distmin > distmax)
-		tr.cdp=0;
+			tr.cdp=0;
 
 		else {
-			ibin = tr.cdp - cdpmin;
+			ibin = tr.cdp - cdp_min;
 			cbin[ibin]++;
 			if (verbose > 2) {
 				distmin = sqrt(pow(xmp - xbin[ibin], 2) + pow(ymp - ybin[ibin], 2));
@@ -228,13 +191,13 @@ main(int argc, char **argv)
 		puttr(&tr);
 	} while (gettr(&tr));
 
-	totalbincount = 0;
+	total_trace_count = 0;
 	if (verbose > 0) {
 		for (ibin=0; ibin < nbin ; ++ibin) {
-			totalbincount += cbin[ibin];
-			warn("cdp: %d (%6.0f, %6.0f), bincount: %d ", ibin + cdpmin, xbin[ibin], ybin[ibin], cbin[ibin]);
+			total_trace_count += cbin[ibin];
+			warn("cdp: %d (%6.0f, %6.0f), bincount: %d ", ibin + cdp_min, xbin[ibin], ybin[ibin], cbin[ibin]);
 		}
-		warn("Total bin count: %d", totalbincount);
+		warn("Total trace count: %d", total_trace_count);
 	}
 
 	return(CWP_Exit());
